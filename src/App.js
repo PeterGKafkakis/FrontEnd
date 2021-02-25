@@ -1,24 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import { useState, useEffect } from "react";
+import useSWR, { SWRConfig } from "swr";
+import Register from "./components/home/auth/register/index";
+import Login from "./components/home/auth/login/index";
+import Dashboard from "./pages/dashboard";
+
+import axios from "axios";
+import DashboardHome from "./components/dashboard/dashboardHome";
+import DashboardMotivation from "./components/dashboard/dashboardMotivation";
+import { LoginContext } from "./contexts/LoginContext";
+
+import SideBar from "./components/dashboard/sidebar";
+import Display from "./components/dashboard/display";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    axios.get("/check").then(
+      (response) => {
+        setIsAuthenticated(true);
+        setIsLoaded(true);
+        console.log(response);
+      },
+      (error) => {
+        setIsAuthenticated(false);
+        setIsLoaded(true);
+        console.log(error);
+      }
+    );
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+        <Switch>
+          <Route exact path='/' component={DashboardHome} />
+          <Route
+            exact
+            path='/login'
+            render={(props) =>
+              !isAuthenticated ? (
+                <Login {...props} />
+              ) : (
+                <Redirect to='/dashboard' />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/register'
+            render={(props) =>
+              !isAuthenticated ? (
+                <Register {...props} />
+              ) : (
+                <Redirect to='/login' />
+              )
+            }
+          />
+        </Switch>
+
+        <Dashboard />
+      </LoginContext.Provider>
+    </Router>
   );
 }
 
