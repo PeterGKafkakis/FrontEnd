@@ -42,7 +42,7 @@ function App() {
     <Router>
       <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
         <Switch>
-          <Route exact path='/' component={DashboardHome} />
+          <Route exact path='/' component={Register} />
           <Route
             exact
             path='/login'
@@ -65,9 +65,20 @@ function App() {
               )
             }
           />
+          <Route
+            exact
+            path='/dashboard'
+            render={(props) =>
+              !isLoaded ? (
+                <></>
+              ) : isAuthenticated ? (
+                <Dashboard {...props} />
+              ) : (
+                <Redirect to='/login' />
+              )
+            }
+          />
         </Switch>
-
-        <Dashboard />
       </LoginContext.Provider>
     </Router>
   );
