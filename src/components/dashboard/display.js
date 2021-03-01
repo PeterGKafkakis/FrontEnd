@@ -1,7 +1,7 @@
 import { Container } from "./styles/display";
 
-const Display = () => {
-  return <Container></Container>;
+const Display = (props) => {
+  return <Container>{props.children}</Container>;
 };
 
 export default Display;

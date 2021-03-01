@@ -1,9 +1,14 @@
-
-
-
+import { Text, Background } from "./styles/dashboardCompContainer";
 
 const DashboardMotivation = () => {
-  return <p>Motivational</p>;
+  return (
+    <>
+      <Background>
+        <Text>Hi</Text>
+        <Text>Hi</Text>
+      </Background>
+    </>
+  );
 };
 
 export default DashboardMotivation;

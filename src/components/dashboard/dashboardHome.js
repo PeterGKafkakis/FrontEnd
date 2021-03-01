@@ -1,4 +1,4 @@
-import { Text, Background } from "./styles/test";
+import { Text, Background } from "./styles/dashboardCompContainer";
 
 const DashboardHome = () => {
   return (
