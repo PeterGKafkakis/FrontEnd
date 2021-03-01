@@ -38,7 +38,11 @@ const DashboardSideNav = () => {
 
       <SideListContainer>
         <SideListItems>Home</SideListItems>
-        <SideListItems>Motivational Video Guides</SideListItems>
+        <SideListItems>
+          <Link to='/dashboard/motivational-videos'>
+            Motivational Video Guides
+          </Link>
+        </SideListItems>
         <SideListItems>Onboarding Video Guides</SideListItems>
         <SideListItems>On Demand Library </SideListItems>
         <SideListItems>Monday Motivation </SideListItems>

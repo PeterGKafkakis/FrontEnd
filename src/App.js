@@ -31,7 +31,7 @@ function App() {
         console.log(response);
       },
       (error) => {
-        setIsAuthenticated(false);
+        setIsAuthenticated(true);
         setIsLoaded(true);
         console.log(error);
       }
