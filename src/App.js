@@ -6,33 +6,29 @@ import {
 } from "react-router-dom";
 
 import { useState, useEffect } from "react";
-import useSWR, { SWRConfig } from "swr";
+
 import Register from "./components/home/auth/register/index";
 import Login from "./components/home/auth/login/index";
 import Dashboard from "./pages/dashboard";
-
+import PrivateRoute from "./privateRoutes/authRoute";
 import axios from "axios";
-import DashboardHome from "./components/dashboard/dashboardHome";
-import DashboardMotivation from "./components/dashboard/dashboardMotivation";
-import { LoginContext } from "./contexts/LoginContext";
 
-import SideBar from "./components/dashboard/sidebar";
-import Display from "./components/dashboard/display";
+import { LoginContext } from "./contexts/LoginContext";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoaded] = useState(true);
 
   useEffect(() => {
     axios.get("/check").then(
       (response) => {
         setIsAuthenticated(true);
-        setIsLoaded(true);
+        setIsLoaded(false);
         console.log(response);
       },
       (error) => {
-        setIsAuthenticated(true);
-        setIsLoaded(true);
+        setIsAuthenticated(false);
+        setIsLoaded(false);
         console.log(error);
       }
     );
@@ -65,18 +61,12 @@ function App() {
               )
             }
           />
-          <Route
-            exact
+
+          <PrivateRoute
+            authed={isAuthenticated}
+            isLoading={isLoading}
             path='/dashboard'
-            render={(props) =>
-              !isLoaded ? (
-                <></>
-              ) : isAuthenticated ? (
-                <Dashboard {...props} />
-              ) : (
-                <Redirect to='/login' />
-              )
-            }
+            component={Dashboard}
           />
         </Switch>
       </LoginContext.Provider>

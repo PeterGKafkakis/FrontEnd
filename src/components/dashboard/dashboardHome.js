@@ -4,8 +4,10 @@ const DashboardHome = () => {
   return (
     <>
       <Background>
-        <Text>Hi</Text>
-        <Text>Hi</Text>
+        <Text>
+          Welcome to the next gen training platform for insurance agencies
+          nationwide
+        </Text>
       </Background>
     </>
   );

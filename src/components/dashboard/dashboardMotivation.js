@@ -6,6 +6,7 @@ const DashboardMotivation = () => {
       <Background>
         <Text>Hi</Text>
         <Text>Hi</Text>
+        <Text>Hi</Text>
       </Background>
     </>
   );
